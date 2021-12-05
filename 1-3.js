@@ -60,7 +60,6 @@ function match(obj, obj2) {
 }
 
 function bmatch2(obj2, val) {
-  console.log("arguments", arguments);
   if (arguments.length === 2) obj2 = object(obj2, val);
   return function (obj) {
     return match(obj, obj2);
@@ -86,3 +85,9 @@ console.log(_.some([0, null, 2])); //true
 console.log(_.some([0, null, false])); //false
 console.log(_.every([0, null, 2])); //false
 console.log(_.every([{}, true, 2])); //true
+
+function falsy(v) {
+  return !v;
+}
+
+console.log(falsy(1));

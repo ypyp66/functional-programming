@@ -63,8 +63,10 @@ export function find(list, predicate) {
 
 export function findIndex(list, predicate) {
   //list : array, predicate : function
+  //
   for (let i = 0; i < list.length; i++) {
     if (predicate(list[i])) {
+      //true면 index를 return
       return i;
     }
   }
@@ -89,7 +91,32 @@ export function every(list) {
   return filter2(list, identity).length === list.length;
   /*
   - flow
-  identity()의 값이 true인 값들이 배열로 넘어옴
+  identity()의 결과가 true인 값들이 배열로 넘어옴
   결과 배열의 길이와 주어진 배열의 길이가 같으면 true, 아니면 false
   */
 }
+
+//every의 시간 복잡도 개선
+function not(v) {
+  return !v;
+}
+function beq(a) {
+  return function (b) {
+    return a === b;
+  };
+}
+
+export function every2(list) {
+  return beq(-1)(findIndex(list, not));
+  //findIndex의 값은 index|-1
+  //beq함수에서 -1과 findIndex의 결과가 같으면 모두 참인 값, 다르면 거짓인 값이 있다는 의미
+}
+
+//함수 쪼개기
+function positive(list) {
+  return find(list, identity);
+}
+function negative(list) {
+  return findIndex(list, not);
+}
+export function some2(list) {}
